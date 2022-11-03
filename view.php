@@ -1,76 +1,136 @@
 <?php
 
+// INSPIRATION https://www.php.net/manual/en/language.oop5.overloading.php
+
 class View
 {
     public $templates = [];
-    public $params = [];
+    protected $params = [];
+    protected $name;
+    protected $view = "";
+    protected $views;
 
-    function __construct($params = null)
+    /* ? in View::params ist festgelegt welche Parameter
+    ** View sich im Kontext einer Komposit-Templates (zB Home)
+    ** herauspicken soll, damit nicht immer über alle
+    ** Parameter beim Rendern iteriert werden muss
+    */
+
+    // IMPROVE Constructor is voll hässlich
+    function __construct($params = null, $fileName=null)
     {
-        $this->params = $params ?? null;
-        $this->render();
+        $this->view = $this->readFromFile($fileName);
+        
+        if ($params != null)
+        {
+            $this->setParams($params);
+        }
+
     }
 
-    public static function getTemplate($templateName)
+    protected function assignNessecaryParams($externalParams)
+    {
+        foreach($this->params as $param)
+        {
+            if (in_array($param, $externalParams))
+            {
+                $this->params[$param] = $externalParams[$param];
+            }
+        }
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getParams()
+    {
+        return $this->params;
+    }
+    /* ? $updateView = true/false Flag
+    ** damit nach Initialisierung View automatisch mit upgedateten
+    ** Parametern gererendert wird
+    */
+    public function setParam($key, $value)
+    {
+        $this->params[$key] = $value;
+    }
+
+    public function setParams($params)
+    {
+        $this->params = $params;
+    }
+
+    protected function readFromFile($templateName)
     {
         $fileName = "./templates/".$templateName.".php";
         // echo $fileName;
         return file_get_contents($fileName);
     }
 
-     public static function renderTemplate($template, $params=null, $readFromFile=true)
+     public static function renderTemplate($template, $params=null)
     {
-        // ob_start();
-        $template = $readFromFile ? View::getTemplate($template) : $template;
-        if ($params == null) 
+        if ($params == null || count($params) <= 0) 
         {
-            echo $template;
-            return;
+            return $template;
         }
         $renderedTemplate = $template;
-        /*
-         preg_match("/(\{\{[a-zA-Z- _]+\}\})/", $renderedTemplate, $slots);
 
-         for ($i=0; $i < count($slots); ++$i)
-         {
-             if (in_array($slots[$i], $params))
-             {
-                 $renderedTemplate = preg_replace($)
-             }
-         }
-         */
         foreach($params as $key=>$value)
             {
                 $renderedTemplate = preg_replace("/(\{\{". $key ."\}\})/", $value, $renderedTemplate);
-                // echo $key;
             }
-        echo $renderedTemplate;
-        return;
+        
+        return $renderedTemplate;
     }
 
     public function before()
     {
-        echo "before";
+        // echo "before";
     }
 
     public function after()
     {
-        echo "after";
+        // echo "after";
     }
 
     public function render() 
     {
-        ob_start();
-
-        $this->before();
-
-        if (count($this->templates) > 0)
+        if ($this->view == "")
         {
-            foreach($this->templates as $template)
-            {
-                return View::renderTemplate($template, $this->params);
-            }
+            $rawTemplate = $this->readFromFile($this->name);
+            $this->view = View::renderTemplate($rawTemplate, $this->params);
+            return;
         }
-        $this->after();
+
+        $this->view = View::renderTemplate($this->view, $this->params);
+        // var_dump($this->params);
+        return;
+    }
+
+    public function display()
+    {
+        if ($this->view == "")
+        {
+            return 0;
+        }
+        echo $this->view;
+        
+        return 1;
+    }
+
+    public function displayAll()
+    {
+        if (count($this->views) == 0)
+        {
+            return 0;
+        }
+        foreach ($this->views as $name=>$viewObj)
+        {
+            $viewObj->display();
+        }
+
+        return 1;
     }
 }
