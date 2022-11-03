@@ -50,12 +50,12 @@ class View
 
     public function before()
     {
-        // echo "before";
+        echo "before";
     }
 
     public function after()
     {
-        // echo "after";
+        echo "after";
     }
 
     public function render() 
