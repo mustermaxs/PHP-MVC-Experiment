@@ -5,10 +5,8 @@ class Request
     
     public function getPath()
     {
-        // echo "<pre>";
-        // var_dump($_SERVER);
-        // echo "</pre>";
         $path = $_SERVER["REQUEST_URI"] ?? "/";
+        $regex_path = "/(?P<controller>[a-z-]+)\/(?P<"
         return $path;
     }
 
