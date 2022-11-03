@@ -42,13 +42,15 @@ class Router
 
     public function matchRoute($route, $method)
     {
+        
         $this->setRoutingInfo("routeExists", false);
-
+        /* CHANGE: "mvc_test" muss, wenn implementiert in Hotel-Seite wsl
+        ** durch "Präfix" der Hotel URL ersetzt werden (zB "ipsumhotel")
+        **/
         $route = str_replace("/mvc_test", "", $route);
         
         foreach($this->routes[$method] as $pattern)
         {
-            // TODO: 
             if (preg_match($pattern, $route, $matches))
             {
                 $this->routingInfo["routeExists"] = true;

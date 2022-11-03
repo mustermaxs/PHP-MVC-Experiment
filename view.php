@@ -18,13 +18,14 @@ class View
         return file_get_contents($fileName);
     }
 
-     public static function renderTemplate($templateName, $params=null)
+     public static function renderTemplate($template, $params=null, $readFromFile=true)
     {
         // ob_start();
-        $template = View::getTemplate($templateName);
+        $template = $readFromFile ? View::getTemplate($template) : $template;
         if ($params == null) 
         {
-            return $template;
+            echo $template;
+            return;
         }
         $renderedTemplate = $template;
         /*
@@ -41,18 +42,20 @@ class View
         foreach($params as $key=>$value)
             {
                 $renderedTemplate = preg_replace("/(\{\{". $key ."\}\})/", $value, $renderedTemplate);
+                // echo $key;
             }
-        return $renderedTemplate;
+        echo $renderedTemplate;
+        return;
     }
 
     public function before()
     {
-        echo "before";
+        // echo "before";
     }
 
     public function after()
     {
-        echo "after";
+        // echo "after";
     }
 
     public function render() 
@@ -65,7 +68,7 @@ class View
         {
             foreach($this->templates as $template)
             {
-                echo View::renderTemplate($template, $this->params);
+                return View::renderTemplate($template, $this->params);
             }
         }
         $this->after();

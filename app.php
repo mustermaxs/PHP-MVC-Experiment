@@ -24,29 +24,19 @@ class Application
     {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $requestURI = $_SERVER["REQUEST_URI"];
+        // echo $requestURI;
 
         $routingInfo = $this->router->dispatch($requestURI, $requestMethod);
-        var_dump($routingInfo);
-        if ($routingInfo["main"] == "main")
-        {
-            $mock_info = array("content"=>"content", "body"=>"<h1>MAIN</h1>");
-        }
-        else
-        {
-            $mock_info = array("content"=>"content", "body"=>"<h1>LOGIN</h1>");
-        }
-        // echo View::renderTemplate("header");
-        // echo View::renderTemplate("body", $mock_info);
-        // $nav = new Navigation();
-        // echo View::renderTemplate("footer");
+        // var_dump($routingInfo);
+        $mock_info = array("view"=>$routingInfo["view"], "controller"=>$routingInfo["controller"]);
+
+        ob_start();
+
+        View::renderTemplate("header", $mock_info);
+        View::renderTemplate("body", $mock_info);
+        new Navigation();
+        View::renderTemplate("footer", $mock_info);
 
         ob_flush();
-        // if ($routingInfo["view"] == "main")
-        // {
-        //     echo "MATCH!!!";
-        // }
-        // var_dump($routingInfo);
-        // $controller = new $routingInfo["controller"]($routingInfo);
-
     }
 }

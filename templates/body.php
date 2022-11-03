@@ -1,7 +1,9 @@
 <body>
-    &#60;body&#62;
-    {{content}}
-    {{body}}
-    &#60;body/&#62;
+    BODY
+    <br>
+    <p>
+    view: {{view}}
+    </p>
+    <p>controller: {{controller}}</p>
     <br>
 </body>
