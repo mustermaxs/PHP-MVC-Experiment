@@ -1,7 +1,7 @@
 <?php
 
 require_once "./app.php";
-
+require_once "./home.php";
 
 
 $app = new Application();
@@ -13,5 +13,14 @@ $app->router->get("/{view}", function() {});
 //     return "HELLO MAIN";
 // });
 
+$mock_params = ["view"=>"users", "controller"=> "none"];
+// $body = new View(null, "body");
+// $body->setParams(["view"=>"main", "controller"=> "undefined"]);
+// $body->render();
+// $body->display();
 
-$app->run();
+$page = new Home($mock_params);
+$page->render();
+$page->display();
+
+// $app->run();

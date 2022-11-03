@@ -2,6 +2,7 @@
 require_once "./router.php";
 require_once "./view.php";
 require_once "./navigation.php";
+require_once "./home.php";
 // require_once "./request.php";
 
 
@@ -31,11 +32,11 @@ class Application
         $mock_info = array("view"=>$routingInfo["view"], "controller"=>$routingInfo["controller"]);
 
         ob_start();
-
-        View::renderTemplate("header", $mock_info);
-        View::renderTemplate("body", $mock_info);
-        new Navigation();
-        View::renderTemplate("footer", $mock_info);
+        new Home();
+        // View::renderTemplate("header", $mock_info);
+        // View::renderTemplate("body", $mock_info);
+        // new Navigation();
+        // View::renderTemplate("footer", $mock_info);
 
         ob_flush();
     }
