@@ -32,35 +32,35 @@ class Router
 
     private function createRegexPattern($path)
     {
+
         $regexPattern = preg_replace("/\//", "\\/", $path);
-        $regexPattern = preg_replace('/\{([a-z]+)\}/', '(?\'\1\'[a-z-]+)', $regexPattern);
-        $regexPattern = "/". $regexPattern. "/";
+        $regexPattern = preg_replace('/\{([a-z]+)\}/', '(?\'\1\'[a-z-_]+)', $regexPattern);
+        $regexPattern = "/^". $regexPattern. "/";
         // echo $regexPattern;
         return $regexPattern;
     }
 
-    private function matchRoute($route, $method)
+    public function matchRoute($route, $method)
     {
         $this->setRoutingInfo("routeExists", false);
-        echo "route: ". $route. "<br>";
+
+        $route = str_replace("/mvc_test", "", $route);
         
         foreach($this->routes[$method] as $pattern)
         {
-            echo "pattern: ". $pattern. "<br>";
-
             // TODO: 
             if (preg_match($pattern, $route, $matches))
             {
                 $this->routingInfo["routeExists"] = true;
-                
-                foreach($matches as $key=>$value)
+                // var_dump($matches);
+                $namedGroupMatches = array_filter($matches, "is_string", ARRAY_FILTER_USE_KEY);
+
+                foreach($namedGroupMatches as $key=>$value)
                 {
-                    var_dump($matches);
-                    echo "\n". $matches["view"];
+                    // echo "\n". $matches["view"];
                     $this->setRoutingInfo($key, $value);
                 }
             }
-
         }
         return $this->routingInfo;
     }
@@ -73,7 +73,7 @@ class Router
     {
         // get query-params here?
         $this->routingInfo = $this->matchRoute($route, $method);
-        return $this->routingInfo;
 
+        return $this->routingInfo;
     }
 }
