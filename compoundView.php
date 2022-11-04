@@ -2,6 +2,7 @@
 
 require_once("./view.php");
 
+
 function displayArr($arr)
 {
     echo "<pre>";
@@ -92,10 +93,12 @@ class Compound extends View
         //     // echo $view->view;
         // }
         $this->after();
+
     }
 
     public function display()
     {
+
         foreach($this->virtualViews as $viewObj=>$view)
         {
             echo html_entity_decode($view->view);

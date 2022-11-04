@@ -8,6 +8,7 @@ class View
     protected $params = [];
     public $name;
     protected $view = '';
+
     protected $views;
 
     /* ? in View::params ist festgelegt welche Parameter
@@ -24,6 +25,7 @@ class View
         {
             $this->view = $this->readFromFile($fileName);
         }
+
         
         if ($params != null)
         {
@@ -41,6 +43,7 @@ class View
 
 
     // TODO noch nicht in Verwendung
+
     protected function assignNessecaryParams($externalParams)
     {
         foreach($this->params as $param)
@@ -76,6 +79,7 @@ class View
     }
 
     public function readFromFile($templateName)
+
     {
         $fileName = "./templates/".$templateName.".php";
         // echo $fileName;
@@ -93,6 +97,7 @@ class View
         foreach($params as $key=>$value)
             {
                 $renderedTemplate = preg_replace("/(\{\{". $key ."\}\})/", htmlspecialchars($value), $renderedTemplate);
+
             }
         
         return $renderedTemplate;
@@ -142,6 +147,7 @@ class View
         {
             return 0;
         }
+
         foreach ($this->views as $name=>$viewObj)
         {
             $viewObj->display();

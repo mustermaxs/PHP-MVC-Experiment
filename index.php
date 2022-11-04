@@ -5,6 +5,7 @@ require_once "./app.php";
 require_once "./navigation.php";
 
 
+
 $app = new Application();
 
 $app->router->get("/{view}/{controller}", function() {});
@@ -23,6 +24,7 @@ $mock_params = ["content"=>"<h2>News</h2><p>Ipsum Hotel jetzt Bordell</p>"];
 // $p = new View(null, "header");
 // $p->render();
 // $p->display();
+
 
 $page = new Home($mock_params);
 $page->render();

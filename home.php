@@ -5,6 +5,7 @@ require_once("./navigation.php");
 require_once("./compoundView.php");
 require_once("./header.php");
 
+
 class Home extends Compound
 {
     function __construct($params)
@@ -19,3 +20,4 @@ class Home extends Compound
         ]; 
     }
 }
+

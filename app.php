@@ -38,6 +38,7 @@ class Application
         }
         // ob_start();
         // new Home();
+
         // View::renderTemplate("header", $mock_info);
         // View::renderTemplate("body", $mock_info);
         // new Navigation();
