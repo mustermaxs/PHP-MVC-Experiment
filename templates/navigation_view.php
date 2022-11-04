@@ -1,8 +1,7 @@
 <span>Navigation</span>
 <ul>
-    <li>Home</li>
-    <li>About</li>
-    <li>Contact us</li>
-    <li><?php echo "TEST"; ?></li>
+    <li>{{view1}}</li>
+    <li>{{view2}}</li>
+    <li>{{view3}}</li>
 
 </ul>

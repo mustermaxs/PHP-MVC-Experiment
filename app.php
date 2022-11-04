@@ -23,6 +23,7 @@ class Application
 
     public function run()
     {
+        ob_start();
         $requestMethod = $_SERVER["REQUEST_METHOD"];
         $requestURI = $_SERVER["REQUEST_URI"];
         // echo $requestURI;
@@ -31,8 +32,12 @@ class Application
         // var_dump($routingInfo);
         $mock_info = array("view"=>$routingInfo["view"], "controller"=>$routingInfo["controller"]);
 
-        ob_start();
-        new Home();
+        if ($routingInfo["view"] == "huber")
+        {
+            echo "HUBER";
+        }
+        // ob_start();
+        // new Home();
         // View::renderTemplate("header", $mock_info);
         // View::renderTemplate("body", $mock_info);
         // new Navigation();
