@@ -1,0 +1,16 @@
+TODO TREE TAGS
+
+        "BUG",
+        "HACK",
+        "FIXME",
+        "TODO",
+        "XXX",
+        "[ ]",
+        "[x]",
+        "TEMPORARY",
+        "CHANGE",
+        "?",
+        "!",
+        "IMPROVE",
+        "INSPIRATION",
+        "TESTING"

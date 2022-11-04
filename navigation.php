@@ -1,8 +1,19 @@
 <?php
 
 include_once("./view.php");
+include_once("./compoundView.php");
+include_once("./home.php");
 
-class Navigation extends View
+class Navigation extends Compound
 {
-    public $templates = ["navigation_view", "nav_2"];
+
+    function __construct($params)
+    {
+        parent::__construct($params);
+
+        $this->views =
+        [
+            "liste" => new View($this->params, "navigation_view")
+        ];
+    }
 }

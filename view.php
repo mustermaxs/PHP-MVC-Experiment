@@ -6,8 +6,9 @@ class View
 {
     public $templates = [];
     protected $params = [];
-    protected $name;
-    protected $view = "";
+    public $name;
+    protected $view = '';
+
     protected $views;
 
     /* ? in View::params ist festgelegt welche Parameter
@@ -19,7 +20,12 @@ class View
     // IMPROVE Constructor is voll hässlich
     function __construct($params = null, $fileName=null)
     {
-        $this->view = $this->readFromFile($fileName);
+        $this->name = $fileName;
+        if ($fileName != null)
+        {
+            $this->view = $this->readFromFile($fileName);
+        }
+
         
         if ($params != null)
         {
@@ -27,6 +33,16 @@ class View
         }
 
     }
+
+    public function getView()
+    {
+        return $this->view;
+    }
+    
+    // ? obsolet ?
+
+
+    // TODO noch nicht in Verwendung
 
     protected function assignNessecaryParams($externalParams)
     {
@@ -62,7 +78,8 @@ class View
         $this->params = $params;
     }
 
-    protected function readFromFile($templateName)
+    public function readFromFile($templateName)
+
     {
         $fileName = "./templates/".$templateName.".php";
         // echo $fileName;
@@ -79,7 +96,8 @@ class View
 
         foreach($params as $key=>$value)
             {
-                $renderedTemplate = preg_replace("/(\{\{". $key ."\}\})/", $value, $renderedTemplate);
+                $renderedTemplate = preg_replace("/(\{\{". $key ."\}\})/", htmlspecialchars($value), $renderedTemplate);
+
             }
         
         return $renderedTemplate;
@@ -97,6 +115,7 @@ class View
 
     public function render() 
     {
+        $this->before();
         if ($this->view == "")
         {
             $rawTemplate = $this->readFromFile($this->name);
@@ -105,6 +124,7 @@ class View
         }
 
         $this->view = View::renderTemplate($this->view, $this->params);
+        $this->after();
         // var_dump($this->params);
         return;
     }
@@ -117,6 +137,7 @@ class View
         }
         echo $this->view;
         
+        
         return 1;
     }
 
@@ -126,6 +147,7 @@ class View
         {
             return 0;
         }
+
         foreach ($this->views as $name=>$viewObj)
         {
             $viewObj->display();
