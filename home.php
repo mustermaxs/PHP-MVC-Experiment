@@ -12,7 +12,7 @@ class Home extends Compound
         parent::__construct($params);
         $this->views = 
         [
-            "header" => new View($this->params, "header"),
+            "header" => new Header($this->params),
             "body" => new View($this->params, "body"),
             "navigation" => new Navigation($this->params),
             "footer" => new View($this->params, "footer")

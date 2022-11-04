@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 
 include_once("./compoundView.php");
 
@@ -10,11 +10,11 @@ class Header extends Compound
         parent::__construct($params);
         
         $styles = 
-        '<link href="./templates/style.css" rel="text/css" type="stylesheet">';
+        '<link href="./templates/style.css" rel="stylesheet" type="text/css">';
 
         $this->views = 
         [
-            "header"=> new View(null, "header"),
+            "header"=> new View(["styles"=>$styles, "js-scripts"=>""], "header"),
         ];
     }
 }
